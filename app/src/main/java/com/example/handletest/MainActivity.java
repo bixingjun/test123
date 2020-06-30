@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     public void submit6(View view) {
         verifyStoragePermissions(this);
         duoquanxian();
-
+        //11
     }
 
 

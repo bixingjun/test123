@@ -13,8 +13,6 @@ def getDate(){
 
 android {
 
-    aaptOptions.cruncherEnabled = false
-    aaptOptions.useNewCruncher = false
     buildToolsVersion '28.0.3'
 
     compileSdkVersion 28
@@ -71,6 +69,13 @@ android {
 
     }
 
+    lintOptions {
+        abortOnError false
+    }
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher = false
+    }
 
 }
 

@@ -15,7 +15,7 @@ android {
 
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
-
+    buildToolsVersion '28.0.3'
 
     compileSdkVersion 28
     defaultConfig {

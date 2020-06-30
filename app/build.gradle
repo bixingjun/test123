@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+
+
+
+def dbflow_version = "4.0.2"
+
+
+def getDate(){
+    def date = new Date()
+    def formatDate = date.format("yyyyMMddHHmm")
+    return formatDate
+}
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.handletest"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+
+
+    signingConfigs {
+        release {
+            keyAlias 'ykt'
+            keyPassword 'ykt123456'
+            storeFile file('./src/ykt.jks')
+            storePassword 'ykt123456'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+
+    applicationVariants.all{variant->
+        variant.outputs.all {output->
+
+            //apk名称
+            def apkName
+            //打包时间
+            def timeNow
+            if ("true".equals(IS_JENKINS)){
+                timeNow = BUILD_TIME
+            }else {
+                timeNow = getDate()
+            }
+            //app-v1.0-release-201811231730.apk
+            apkName = APP_NAME+"-v"+APP_VERSION+"-"+variant.buildType.name+"-"+timeNow+".apk"
+            variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath+File.separator+"apk")
+            outputFileName = apkName
+        }
+
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    // sql-cipher database encyrption (optional)
+    compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
+
+
+
+}

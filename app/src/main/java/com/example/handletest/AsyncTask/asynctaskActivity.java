@@ -39,7 +39,7 @@ public class asynctaskActivity extends AppCompatActivity implements MyAsyncTask.
 
         Bitmap bitmap = BitmapFactory.decodeFile(getSDCardDir().toString());
 
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(bitmap); //565
 
     }
 

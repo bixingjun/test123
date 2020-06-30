@@ -12,6 +12,11 @@ def getDate(){
 }
 
 android {
+
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
+
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.handletest"
